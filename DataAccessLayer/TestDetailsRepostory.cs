@@ -102,5 +102,26 @@ namespace DataAccessLayer
             }
 
         }
+        public TestDetail ReadByNumberSP(long Id)
+        {
+            try
+            {
+
+                var con = new SqlConnection(connectionString);
+                con.Open();
+                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec ReadByNumber @Id={Id}");
+                con.Close();
+                return TestDetails;
+            }
+            catch (SqlException ex)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
     }
 }
