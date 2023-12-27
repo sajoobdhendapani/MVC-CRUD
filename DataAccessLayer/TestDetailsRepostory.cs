@@ -5,12 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer
 {
     public class TestDetailsRepostory : ITestDetailsRepostory
     {
-        public string connectionString = "Data source=DESKTOP-CC47JG8\\SQLEXPRESS;initial catalog=Batch7;user id=sa;password=Anaiyaan@123;";
+        public string connectionString;
+        public TestDetailsRepostory(IConfiguration configuration)
+        {
+            connectionString = configuration.GetConnectionString("DbConnection");
+        }
 
         public TestDetail InsertSP(TestDetail details)
         {

@@ -1,29 +1,33 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLayer;
-namespace MVCwithCRUD.Controllers
+namespace MVCwithCRUD.Controllers 
 {
     public class TestDetailsController : Controller
     {
-        private readonly ITestDetailsRepostory TstdetObj;
-       public TestDetailsController()
+        private readonly ITestDetailsRepostory _TstdetObj;
+        private readonly string _connectionString;
+       public TestDetailsController(ITestDetailsRepostory result, IConfiguration Configuration)
         {
-            TstdetObj = new TestDetailsRepostory();
+            _TstdetObj = result;
+            _connectionString = Configuration.GetConnectionString("DbConnection");
+
         }
         public ActionResult Index()
         {
-            var result = TstdetObj.ReadSP();
+            var result = _TstdetObj.ReadSP();
             return View("list",result);
         }
 
         // GET: TestDetailsController1/Details/5
         public ActionResult Details(int id)
         {
-            var Detail = TstdetObj.ReadByNumberSP(id);
+            var Detail = _TstdetObj.ReadByNumberSP(id);
             return View("Details",Detail);
         }
 
@@ -41,21 +45,12 @@ namespace MVCwithCRUD.Controllers
             try
             {
                 
-                if (ModelState.IsValid)
-                {
-                    if (val.StartDate < DateTime.Now)
-                    {
-                        ModelState.AddModelError("StratDate", "Start date must be greater than today date");
-                        return View("Create", val);
-                    }
-                    TstdetObj.InsertSP(val);
+                
+                    _TstdetObj.InsertSP(val);
 
                     return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    return View("Create", val);
-                }
+                
+             
             }
             catch
             {
@@ -66,7 +61,7 @@ namespace MVCwithCRUD.Controllers
         // GET: TestDetailsController1/Edit/5
         public ActionResult Edit(int id)
         {
-            var Detail = TstdetObj.ReadByNumberSP(id);
+            var Detail = _TstdetObj.ReadByNumberSP(id);
             return View("Edit",Detail);
         }
 
@@ -77,7 +72,7 @@ namespace MVCwithCRUD.Controllers
         {
             try
             {
-                TstdetObj.UpdateSP(id,det);
+                _TstdetObj.UpdateSP(id,det);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -89,7 +84,7 @@ namespace MVCwithCRUD.Controllers
         // GET: TestDetailsController1/Delete/5
         public ActionResult Delete(int id)
         {
-            var Delete = TstdetObj.ReadByNumberSP(id);
+            var Delete = _TstdetObj.ReadByNumberSP(id);
             return View("Delete",Delete);
         }
 
@@ -100,7 +95,7 @@ namespace MVCwithCRUD.Controllers
         {
             try
             {
-                TstdetObj.DeleteSP(id);
+                _TstdetObj.DeleteSP(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
