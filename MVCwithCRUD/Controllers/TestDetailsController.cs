@@ -10,31 +10,32 @@ namespace MVCwithCRUD.Controllers
 {
     public class TestDetailsController : Controller
     {
-        private readonly ITestDetailsRepostory _TstdetObj;
+        private readonly ITestDetailsRepostory _tstdetObj;
         private readonly string _connectionString;
        public TestDetailsController(ITestDetailsRepostory result, IConfiguration Configuration)
         {
-            _TstdetObj = result;
+            _tstdetObj = result;
             _connectionString = Configuration.GetConnectionString("DbConnection");
 
         }
         public ActionResult Index()
         {
-            var result = _TstdetObj.ReadSP();
+            var result = _tstdetObj.ReadSP();
             return View("list",result);
         }
+
 
         // GET: TestDetailsController1/Details/5
         public ActionResult Details(int id)
         {
-            var Detail = _TstdetObj.ReadByNumberSP(id);
-            return View("Details",Detail);
+            var Det = _tstdetObj.ReadByNumberSP(id);
+            return View("Details",Det);
         }
 
         // GET: TestDetailsController1/Create
         public ActionResult Create()
         {
-            return View("Insert",new TestDetail());
+            return View("Create",new TestDetail());
         }
 
         // POST: TestDetailsController1/Create
@@ -44,13 +45,23 @@ namespace MVCwithCRUD.Controllers
         {
             try
             {
-                
-                
-                    _TstdetObj.InsertSP(val);
 
+                if (val.StartDate < DateTime.Today)
+                {
+                    ModelState.AddModelError("StartDate", "StartDate Must Be Greaterthen");
+                    return View("Create", val);
+                }
+                if (ModelState.IsValid)
+                {
+                    _tstdetObj.InsertSP(val);
                     return RedirectToAction(nameof(Index));
+                }
+                else 
+                {
+                    return View("Create", val);
+                }
                 
-             
+                
             }
             catch
             {
@@ -61,7 +72,7 @@ namespace MVCwithCRUD.Controllers
         // GET: TestDetailsController1/Edit/5
         public ActionResult Edit(int id)
         {
-            var Detail = _TstdetObj.ReadByNumberSP(id);
+            var Detail = _tstdetObj.ReadByNumberSP(id);
             return View("Edit",Detail);
         }
 
@@ -72,8 +83,21 @@ namespace MVCwithCRUD.Controllers
         {
             try
             {
-                _TstdetObj.UpdateSP(id,det);
-                return RedirectToAction(nameof(Index));
+                if (det.StartDate < DateTime.Today)
+                {
+                    ModelState.AddModelError("StartDate", "StartDate Must Be Greaterthen");
+                    return View("Edit", det);
+                }
+                if (ModelState.IsValid)
+                {
+                    _tstdetObj.UpdateSP(id, det);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return View("Edit", det);
+                }
+                
             }
             catch
             {
@@ -84,18 +108,18 @@ namespace MVCwithCRUD.Controllers
         // GET: TestDetailsController1/Delete/5
         public ActionResult Delete(int id)
         {
-            var Delete = _TstdetObj.ReadByNumberSP(id);
+            var Delete = _tstdetObj.ReadByNumberSP(id);
             return View("Delete",Delete);
         }
 
         // POST: TestDetailsController1/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Deletebynym(int Id)
         {
             try
             {
-                _TstdetObj.DeleteSP(id);
+                _tstdetObj.DeleteSP(Id);
                 return RedirectToAction(nameof(Index));
             }
             catch
