@@ -65,14 +65,14 @@ namespace DataAccessLayer
             }
 
         }
-        public TestDetail DeleteSP(long Id)
+        public TestDetail DeleteSP(long id)
         {
             try
             {
 
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec DeleteTestDetails @Id={Id}");
+                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec DeleteTestDetails @Id={id}");
                 con.Close();
                 return TestDetails;
             }
@@ -86,15 +86,15 @@ namespace DataAccessLayer
             }
 
         }
-        public TestDetail UpdateSP(long Id, TestDetail UpdtDetails)
+        public TestDetail UpdateSP(long id, TestDetail updtDetails)
         {
             try
             {
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec UpdateTestDetails @id={Id}, @Name='{UpdtDetails.Name}',@Number={UpdtDetails.Number},@Duration={UpdtDetails.Duration},@Score={UpdtDetails.Score},@StartDate='{UpdtDetails.StartDate.ToString("MM-dd-yyyy")}'");
+                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec UpdateTestDetails @id={id}, @Name='{updtDetails.Name}',@Number={updtDetails.Number},@Duration={updtDetails.Duration},@Score={updtDetails.Score},@StartDate='{updtDetails.StartDate.ToString("MM-dd-yyyy")}'");
                 con.Close();
-                return UpdtDetails;
+                return updtDetails;
             }
             catch (SqlException sql)
             {
@@ -107,14 +107,14 @@ namespace DataAccessLayer
             }
 
         }
-        public TestDetail ReadByNumberSP(long Id)
+        public TestDetail ReadByNumberSP(long id)
         {
             try
             {
 
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec ReadByNumber @Id={Id}");
+                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec ReadByNumber @Id={id}");
                 con.Close();
                 return TestDetails;
             }

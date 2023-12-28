@@ -19,11 +19,13 @@ namespace DataAccessLayer
         [Display(Name = " Subject Number")]
         public int Number { get; set; }
         [Required(ErrorMessage = "Enter Your Subject Duration")]
+        //[Compare("Score")]
         [Display(Name = " Subject Duration")]
-        [Compare("Score")]
+        
         public double Duration { get; set; }
         [Required(ErrorMessage = "Enter Your Subject Score ")]
         [Display(Name = " Subject Score")]
+        
         public long Score { get; set; }
         [Required(ErrorMessage = "Enter Your Subject StartDate")]
         [Display(Name = " Subject StartDate")]
