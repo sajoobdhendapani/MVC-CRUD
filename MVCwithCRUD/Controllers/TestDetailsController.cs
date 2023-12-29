@@ -20,22 +20,45 @@ namespace MVCwithCRUD.Controllers
         }
         public ActionResult Index()
         {
-            var result = _tstdetObj.ReadSP();
-            return View("list",result);
+            try
+            {
+                var result = _tstdetObj.ReadSP();
+                return View("list", result);
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
-
 
         // GET: TestDetailsController1/Details/5
         public ActionResult Details(int id)
         {
-            var Det = _tstdetObj.ReadByNumberSP(id);
-            return View("Details",Det);
+            try
+            {
+
+                var Det = _tstdetObj.ReadByNumberSP(id);
+                return View("Details", Det);
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
 
         // GET: TestDetailsController1/Create
         public ActionResult Create()
         {
-            return View("Create",new TestDetail());
+            try
+            {
+
+
+                return View("Create", new TestDetail());
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
 
         // POST: TestDetailsController1/Create
@@ -48,7 +71,7 @@ namespace MVCwithCRUD.Controllers
 
                 if (val.StartDate < DateTime.Today)
                 {
-                    ModelState.AddModelError("StartDate", "StartDate Must Be Greaterthen");
+                    ModelState.AddModelError("StartDate", "StartDate Must Be Greater To Today");
                     return View("Create", val);
                 }
                 if (ModelState.IsValid)
@@ -65,15 +88,24 @@ namespace MVCwithCRUD.Controllers
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
 
         // GET: TestDetailsController1/Edit/5
         public ActionResult Edit(int id)
         {
-            var Detail = _tstdetObj.ReadByNumberSP(id);
-            return View("Edit",Detail);
+            try
+            {
+
+
+                var Detail = _tstdetObj.ReadByNumberSP(id);
+                return View("Edit", Detail);
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
 
         // POST: TestDetailsController1/Edit/5
@@ -108,23 +140,32 @@ namespace MVCwithCRUD.Controllers
         // GET: TestDetailsController1/Delete/5
         public ActionResult Delete(int id)
         {
-            var Delete = _tstdetObj.ReadByNumberSP(id);
-            return View("Delete",Delete);
+            try
+            {
+
+
+                var Delete = _tstdetObj.ReadByNumberSP(id);
+                return View("Delete", Delete);
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
 
         // POST: TestDetailsController1/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Deletebynym(int Id)
+        public ActionResult Deletebynym(int id)
         {
             try
             {
-                _tstdetObj.DeleteSP(Id);
+                _tstdetObj.DeleteSP(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
     }

@@ -9,24 +9,34 @@ namespace DataAccessLayer
 {
     public class TestDetail
     {
+        public TestDetail()
+        {
+            StartDate = DateTime.Now;
+        }
         public long Id { get; set; }
 
         [Required(ErrorMessage = "Enter Your Subject  Name"), MaxLength(50)]
         [StringLength(50, ErrorMessage = "Please do not enter values over 50 characters")]
         [Display(Name = " Subject Name")]
         public string Name { get; set; }
+
         [Required(ErrorMessage = "Enter Your Subject Number")]
         [Display(Name = " Subject Number")]
+        [Range(1,100 , ErrorMessage = "0 is not allowed")]
         public int Number { get; set; }
+
         [Required(ErrorMessage = "Enter Your Subject Duration")]
-        //[Compare("Score")]
         [Display(Name = " Subject Duration")]
-        
+        [Range(1, 100, ErrorMessage = "0 is not allowed")]
+
         public double Duration { get; set; }
+
         [Required(ErrorMessage = "Enter Your Subject Score ")]
         [Display(Name = " Subject Score")]
-        
+        [Range(1, 100, ErrorMessage = "0 is not allowed")]
+
         public long Score { get; set; }
+        
         [Required(ErrorMessage = "Enter Your Subject StartDate")]
         [Display(Name = " Subject StartDate")]
         public DateTime StartDate { get; set; }

@@ -11,7 +11,7 @@ namespace DataAccessLayer
         public TestDetail InsertSP(TestDetail details);
         public IEnumerable<TestDetail> ReadSP();
         public TestDetail DeleteSP(long id);
-        public TestDetail UpdateSP(long id, TestDetail updtDetails);
+        public TestDetail UpdateSP(long id, TestDetail updtdetails);
         public TestDetail ReadByNumberSP(long id);
     }
 }

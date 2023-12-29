@@ -86,15 +86,15 @@ namespace DataAccessLayer
             }
 
         }
-        public TestDetail UpdateSP(long id, TestDetail updtDetails)
+        public TestDetail UpdateSP(long id, TestDetail updtdetails)
         {
             try
             {
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec UpdateTestDetails @id={id}, @Name='{updtDetails.Name}',@Number={updtDetails.Number},@Duration={updtDetails.Duration},@Score={updtDetails.Score},@StartDate='{updtDetails.StartDate.ToString("MM-dd-yyyy")}'");
+                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec UpdateTestDetails @id={id}, @Name='{updtdetails.Name}',@Number={updtdetails.Number},@Duration={updtdetails.Duration},@Score={updtdetails.Score},@StartDate='{updtdetails.StartDate.ToString("MM-dd-yyyy")}'");
                 con.Close();
-                return updtDetails;
+                return updtdetails;
             }
             catch (SqlException sql)
             {
