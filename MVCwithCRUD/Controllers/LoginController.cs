@@ -12,7 +12,7 @@ namespace MVCwithCRUD.Controllers
         // GET: LoginController
         public ActionResult Index()
         {
-            return View();
+            return View("Login");
         }
 
         // GET: LoginController/Details/5
