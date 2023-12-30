@@ -68,12 +68,13 @@
     
     <div class="login-container">
         <h2>Login</h2>
-        <form asp-controller="Home" asp-action="Index" >
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+        <form asp-action="authentication" method="post" >
+            <div>
+                  <input asp-for=""="Username"type=" name="Username"
+                  <input type="text" id="username" name="username" required>
+            </div>
+                  <label for="password">Password:</label>
+                  <input type="password" id="password" name="password" required>
 
             <button type="submit">Login</button>
         </form>

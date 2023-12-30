@@ -4,12 +4,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace MVCwithCRUD.Controllers
 {
+    public class Loginkey
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
     public class LoginController : Controller
     {
-        // GET: LoginController
+        private readonly string _userid;
+        private readonly string _passcord;
+        public  LoginController(IConfiguration configuration)
+        {
+            _userid = configuration.GetValue <string> ("Login:Username");
+            _passcord = configuration.GetValue<string>("Login:Password");
+        }
+        
         public ActionResult Index()
         {
             return View("Login");
