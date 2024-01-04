@@ -11,12 +11,13 @@ namespace MVCwithCRUD.Controllers
     public class TestDetailsController : Controller
     {
         private readonly ITestDetailsRepostory _tstdetObj;
+        private readonly ILocationRepostory _add;
         private readonly string _connectionString;
-       public TestDetailsController(ITestDetailsRepostory result, IConfiguration Configuration)
+       public TestDetailsController(ITestDetailsRepostory result, IConfiguration Configuration,ILocationRepostory add)
         {
             _tstdetObj = result;
             _connectionString = Configuration.GetConnectionString("DbConnection");
-
+            _add = add;
         }
         public ActionResult Index()
         {
@@ -52,8 +53,9 @@ namespace MVCwithCRUD.Controllers
             try
             {
 
-
-                return View("Create", new TestDetail());
+                var gat = new TestDetail();
+                gat.Locations = _add.LocationDetails().ToList();
+                return View("Create", gat);
             }
             catch
             {

@@ -25,6 +25,7 @@ namespace MVCwithCRUD
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ITestDetailsRepostory, TestDetailsRepostory>();
+            services.AddTransient<ILocationRepostory, LocationRepostory>();
             services.AddControllersWithViews();
         }
 

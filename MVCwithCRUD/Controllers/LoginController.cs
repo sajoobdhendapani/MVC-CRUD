@@ -17,6 +17,7 @@ namespace MVCwithCRUD.Controllers
     {
         private readonly string _userid;
         private readonly string _passcord;
+
         public  LoginController(IConfiguration configuration)
         {
             _userid = configuration.GetValue <string> ("Login:Username");
@@ -29,9 +30,26 @@ namespace MVCwithCRUD.Controllers
         }
 
         // GET: LoginController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult authentication(Loginkey log)
         {
-            return View();
+            try
+            {
+                if(log.Username == _userid && log.Password == _passcord)
+                {
+                    return Redirect("/TestDetails/index");
+                }
+                else
+                {
+                    ModelState.AddModelError("Password", "Invalid Email Error");
+                    return View("Login");
+                }
+
+            }
+            catch
+            {
+                return View("Error");
+            }
+            
         }
 
         // GET: LoginController/Create

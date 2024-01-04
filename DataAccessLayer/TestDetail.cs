@@ -22,25 +22,31 @@ namespace DataAccessLayer
 
         [Required(ErrorMessage = "Enter Your Subject Number")]
         [Display(Name = " Subject Number")]
-        [Range(1,100 , ErrorMessage = "0 is not allowed")]
+        [Range(1, 100, ErrorMessage = "0 is not allowed")]
         public int Number { get; set; }
 
         [Required(ErrorMessage = "Enter Your Subject Duration")]
         [Display(Name = " Subject Duration")]
-        [Range(1, 100, ErrorMessage = "0 is not allowed")]
+        [Range(1, 5, ErrorMessage = "1 to 5 hrs  will  allowed")]
 
         public double Duration { get; set; }
 
         [Required(ErrorMessage = "Enter Your Subject Score ")]
         [Display(Name = " Subject Score")]
-        [Range(1, 100, ErrorMessage = "0 is not allowed")]
+        [Range(1, 101, ErrorMessage = "minimum 50 to 100  subject mark  allowed")]
+
 
         public long Score { get; set; }
-        
+
         [Required(ErrorMessage = "Enter Your Subject StartDate")]
         [Display(Name = " Subject StartDate")]
         public DateTime StartDate { get; set; }
-        
+
+        public long LocationId { get; set; }
+
+        public List<Locations> Locations { get; set; }
 
     }
+
+
 }

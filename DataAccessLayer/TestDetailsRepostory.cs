@@ -24,7 +24,7 @@ namespace DataAccessLayer
 
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                con.Execute($"exec InsertTeasDetails @Name='{details.Name}',@Number={details.Number},@Duration={details.Duration},@Score={details.Score},@StartDate='{details.StartDate.ToString("MM-dd-yyyy")}'");
+                con.Execute($"exec InsertTeasDetails @Name='{details.Name}',@Number={details.Number},@Duration={details.Duration},@Score={details.Score},@StartDate='{details.StartDate.ToString("MM-dd-yyyy")}',@LocationId={details.LocationId}");
                 con.Close();
 
             }

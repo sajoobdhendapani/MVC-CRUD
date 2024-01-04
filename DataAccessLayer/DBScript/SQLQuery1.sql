@@ -6,7 +6,8 @@ CREATE TABLE [TestDetails]
 	[Number] [int] NOT NULL,
 	[Duration] [decimal](18, 2) NOT NULL,
 	[Score] [bigint] NOT NULL,
-	[StartDate] [datetime2](7) NOT NULL
+	[StartDate] [datetime2](7) NOT NULL,
+	[LocationId] [bigint] NOT NULL
 )
 Insert Into TestDetails(Name,Number,Duration,Score,StartDate) 
 values('Tamil',4,3.00,200,'12/08/2023')
@@ -58,3 +59,26 @@ select * from TestDetails where Id=@Id
 end
 exec ReadByNumber 19
 drop procedure ReadByNumber
+
+create table [Locations]
+(
+[LocationId][bigint] primary key identity(1,1) not null,
+[LocationName][nvarchar](50) not null
+)
+
+create procedure LocationDetails
+(@LocationName nvarchar(50))
+as
+begin
+insert into Locations values (@LocationName)
+end
+exec LocationDetails' covai'
+select * from locations
+
+create procedure LocationUpdate
+(@LocationId bigint,@LocationName nvarchar(50))
+as
+begin
+update  Locations set LocationName=@LocationName where LocationId=@LocationId
+end
+exec LocationUpdate 4, 'Madurai'
