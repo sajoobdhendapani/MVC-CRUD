@@ -25,7 +25,7 @@ namespace DataAccessLayer
 
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                var locations = con.Query<Locations>($"exec LocationDetails ");
+                var locations = con.Query<Locations>($"exec selectLocation");
                 con.Close();
                 return locations.ToList();
 

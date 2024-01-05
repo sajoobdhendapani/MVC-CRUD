@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,14 @@ namespace MVCwithCRUD
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var conncetionString = Configuration.GetConnectionString("DbConnection");
+
+            services.AddDbContext<SampleDbContext>(options => options.UseSqlServer(conncetionString));
+
             services.AddTransient<ITestDetailsRepostory, TestDetailsRepostory>();
             services.AddTransient<ILocationRepostory, LocationRepostory>();
+            services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddControllersWithViews();
         }
 

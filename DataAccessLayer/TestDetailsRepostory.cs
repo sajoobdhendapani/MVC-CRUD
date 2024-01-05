@@ -24,7 +24,7 @@ namespace DataAccessLayer
 
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                con.Execute($"exec InsertTeasDetails @Name='{details.Name}',@Number={details.Number},@Duration={details.Duration},@Score={details.Score},@StartDate='{details.StartDate.ToString("MM-dd-yyyy")}',@LocationId={details.LocationId}");
+                con.Execute($"exec InsertTestDetails @Name='{details.Name}',@Number={details.Number},@Duration={details.Duration},@Score={details.Score},@StartDate='{details.StartDate.ToString("MM-dd-yyyy")}',@LocationId={details.LocationId}");
                 con.Close();
 
             }
@@ -92,7 +92,7 @@ namespace DataAccessLayer
             {
                 var con = new SqlConnection(connectionString);
                 con.Open();
-                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec UpdateTestDetails @id={id}, @Name='{updtdetails.Name}',@Number={updtdetails.Number},@Duration={updtdetails.Duration},@Score={updtdetails.Score},@StartDate='{updtdetails.StartDate.ToString("MM-dd-yyyy")}'");
+                var TestDetails = con.QueryFirstOrDefault<TestDetail>($"exec UpdateTestDetails @id={id}, @Name='{updtdetails.Name}',@Number={updtdetails.Number},@Duration={updtdetails.Duration},@Score={updtdetails.Score},@StartDate='{updtdetails.StartDate.ToString("MM-dd-yyyy")}',@LocationId={updtdetails.LocationId}");
                 con.Close();
                 return updtdetails;
             }
