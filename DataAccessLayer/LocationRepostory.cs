@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer
 {
-    public class LocationRepostory:ILocationRepostory
+    public class LocationRepostory : ILocationRepostory
     {
         string connectionString;
         public LocationRepostory(IConfiguration configuration)
@@ -41,6 +41,6 @@ namespace DataAccessLayer
             }
 
         }
-       
+
     }
 }

@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLayer;
+using EntityFreamworkMVC;
+using EntityFrameworkMVC;
 
 namespace MVCwithCRUD
 {
@@ -26,13 +28,13 @@ namespace MVCwithCRUD
         public void ConfigureServices(IServiceCollection services)
         {
 
-            var conncetionString = Configuration.GetConnectionString("DbConnection");
 
-            services.AddDbContext<SampleDbContext>(options => options.UseSqlServer(conncetionString));
+
+            services.AddDbContext<SampleDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
 
             services.AddTransient<ITestDetailsRepostory, TestDetailsRepostory>();
             services.AddTransient<ILocationRepostory, LocationRepostory>();
-            services.AddTransient<IRegistrationRepository, RegistrationRepository>();
+            services.AddTransient<IRegistrationRepository,RegistrationRepository>();
             services.AddControllersWithViews();
         }
 
