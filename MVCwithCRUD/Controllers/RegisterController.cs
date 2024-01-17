@@ -130,7 +130,6 @@ namespace MVCwithCRUD.Controllers
             try
             {
                 _add.Delete(RegistrationId);
-
                 return RedirectToAction(nameof(Index));
             }
             catch
