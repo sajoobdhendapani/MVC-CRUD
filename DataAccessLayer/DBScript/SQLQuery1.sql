@@ -18,23 +18,25 @@ Update TestDetails set number = 7,score = 100 where id=1
 Delete from TestDetails Where name='tamil'
 --(store procedure)
 ------Insert------
-Create procedure InsertTeasDetails
-@Name varchar(50),@Number int,@Duration decimal(18,2),@Score bigint,@StartDate datetime2(7)
+Create procedure InsertTestDetails
+@Name varchar(50),@Number int,@Duration decimal(18,2),@Score bigint,@StartDate datetime2(7),@LocationId bigint
 as
 begin
-insert into TestDetails values(@Name,@Number,@Duration,@Score,@StartDate)
+insert into TestDetails values(@Name,@Number,@Duration,@Score,@StartDate,@LocationId)
 end
-exec InsertTeasDetails'html',3,3.00,150,'12/05/2024'
-drop procedure UpdateTestDetails
-select * from TestDetails
+drop procedure InsertTestDetails
+
+exec InsertTestDetails'html',33,2.50,90,'12/12/2024',2
+drop procedure DeleteTestDetails
+select* from TestDetails
 ------update-----
 create procedure UpdateTestDetails
-@Id bigint,@Name varchar(50),@Number int,@Duration decimal(18,2),@Score bigint,@StartDate datetime2(7)
+@Id bigint,@Name varchar(50),@Number int,@Duration decimal(18,2),@Score bigint,@StartDate datetime2(7),@LocationId bigint
 as
 begin
-update TestDetails set name=@Name,Number=@Number,Duration=@Duration,Score=@Score,StartDate=@StartDate where Id=@Id
+update TestDetails set name=@Name,Number=@Number,Duration=@Duration,Score=@Score,StartDate=@StartDate,LocationId=@LocationId where Id=@Id
 end
-exec UpdateTestDetails 12,'lenux',43,2.30,67,'12/12/2024'
+exec UpdateTestDetails 1,'lenux',43,2.30,67,'12/12/2024'
 ----delete-----
 create procedure DeleteTestDetails
 (@Id bigint)
@@ -50,6 +52,7 @@ begin
 select * from TestDetails
 end
 exec ReadAllTestDetails
+drop procedure ReadByNumber
 ----------ReadByNumber------------
 create procedure ReadByNumber
 (@Id bigint)
@@ -57,7 +60,7 @@ as
 begin
 select * from TestDetails where Id=@Id
 end
-exec ReadByNumber 19
+exec ReadByNumber 1
 drop procedure ReadByNumber
 
 create table [Locations]
@@ -65,16 +68,17 @@ create table [Locations]
 [LocationId][bigint] primary key identity(1,1) not null,
 [LocationName][nvarchar](50) not null
 )
-
+insert into Locations(LocationName) values('Chennai')
+select * from Locations
 create procedure LocationDetails
 (@LocationName nvarchar(50))
 as
 begin
 insert into Locations values (@LocationName)
 end
-exec LocationDetails' covai'
-select * from locations
-
+exec LocationDetails' Theni'
+drop table locations
+drop procedure LocationDetails
 create procedure LocationUpdate
 (@LocationId bigint,@LocationName nvarchar(50))
 as
@@ -82,3 +86,11 @@ begin
 update  Locations set LocationName=@LocationName where LocationId=@LocationId
 end
 exec LocationUpdate 4, 'Madurai'
+
+create procedure selectLocation
+as
+begin
+select* from Locations
+end
+drop procedure selectLocation
+exec selectLocation
