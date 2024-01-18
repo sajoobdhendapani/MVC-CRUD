@@ -21,7 +21,7 @@ namespace EntityFrameworkMVC
         {
             try
             {
-                _context.Database.ExecuteSqlRaw($"exec InsertRegister'{register.UserName}','{register.Password}'");
+                _context.Database.ExecuteSqlRaw($"insert into Registration value Username='{register.UserName}',Password='{register.Password}'");
             }
             catch (Exception ex)
             {
