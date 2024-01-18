@@ -79,8 +79,14 @@
             <input asp-for="Password" type="password" name="Password" placeholder="Enter your Password" required>
             <span asp-validation-for="Password"></span>
             <button type="submit">Login</button>
+            <nav>
+                <div class="signup-container">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Sign up</a>
+                </div>
+            </nav>
         </form>
     </div>
+
 
 </body>
 </html>

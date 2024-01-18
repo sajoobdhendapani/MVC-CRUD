@@ -21,23 +21,25 @@ namespace EntityFrameworkMVC
         {
             try
             {
-                _context.Database.ExecuteSqlRaw($"insert into Registration value Username='{register.UserName}',Password='{register.Password}'");
+                _context.Database.ExecuteSqlRaw($"exec InsertRegister '{register.UserName}','{register.Password}'");
             }
             catch (Exception ex)
             {
                 throw;
             }
+            
+
         }
-        public bool Login(Registration check)
+        public bool Login(string Username ,string Password)
         {
             try
             {
 
-                var result = _context.Registration.FromSqlRaw<Registration>($"select * from Registration where Username='{check.UserName}'").ToList();
-                if (result == null || result.Count > 0)
-                    return false;
-                else
+                var result = _context.Registration.FromSqlRaw<Registration>($" exec checkpassword'{Username}','{Password}'").ToList();
+                if (result.Count > 0 & result!= null)
                     return true;
+                else
+                    return false;
             }
             catch (Exception ex)
             {
@@ -48,8 +50,8 @@ namespace EntityFrameworkMVC
         {
             try
             {
-                var result = _context.Registration.FromSqlRaw<Registration>($"select * from Registration");
-                return result.ToList();
+                IEnumerable<Registration> all = _context.Registration.FromSqlRaw<Registration>($"exec Getallas");
+                return all.ToList();
             }
             catch(Exception)
             {
@@ -60,21 +62,21 @@ namespace EntityFrameworkMVC
         {
             try
             {
-             var result = _context.Database.ExecuteSqlRaw($"Update Registration set Username='{value.UserName}',Password='{value.Password}'where Registration={Id} ");
+                var update =_context.Database.ExecuteSqlRaw($"exec UpdateRecord {Id},'{value.UserName}','{value.Password}'");
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
         }
-        public Registration GetById(long id)
+        public Registration GetById(long number)
         {
             try
             {
  
-                var result = _context.Registration.FromSqlRaw<Registration>($"select from Registration where RegistrationId={id}");
-                return result.ToList().FirstOrDefault();
+                var result = _context.Registration.FromSqlRaw<Registration>($"exec Getbyid={number}").ToList().FirstOrDefault(); 
+                return result;
             }
             catch(Exception ex)
             {
@@ -85,7 +87,7 @@ namespace EntityFrameworkMVC
         {
             try
             {
-                var result = _context.Database.ExecuteSqlRaw($"delete Registration where RegistrationId={id} ");
+                var result = _context.Database.ExecuteSqlRaw($"exec DeleteRegistration {id} ");
             }
             catch(Exception ex)
             {
@@ -97,17 +99,14 @@ namespace EntityFrameworkMVC
         {
             try
             {
-                var result = _context.Registration.FromSqlRaw<Registration>($"Select * from Registration where Username='{register.UserName}'And Password='{register.Password}' ").ToList();
-                if(result.Count==1)
-                {
-                    return true;
-                }
-                else
-                {
+                var result = _context.Registration.FromSqlRaw<Registration>($"exec CheckRegistration '{register.UserName}','{register.Password}'").ToList();
+                if (result.Count > 0 && result != null)
                     return false;
-                }
+                else
+                    return true;
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }

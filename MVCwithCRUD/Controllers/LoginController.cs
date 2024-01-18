@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using EntityFrameworkMVC;
 
 namespace MVCwithCRUD.Controllers
 {
@@ -15,42 +16,47 @@ namespace MVCwithCRUD.Controllers
     }
     public class LoginController : Controller
     {
-        private readonly string _userid;
-        private readonly string _passcord;
+        //private readonly string _userid;
+        //private readonly string _passcord;
 
-        public  LoginController(IConfiguration configuration)
+        //public  LoginController(IConfiguration configuration)
+        //{
+        //    _userid = configuration.GetValue <string> ("Login:Username");
+        //    _passcord = configuration.GetValue<string>("Login:Password");
+        //}
+        private readonly IRegistrationRepository _reg;
+        private readonly string _configuration;
+        public LoginController(IRegistrationRepository reg, IConfiguration configuration)
         {
-            _userid = configuration.GetValue <string> ("Login:Username");
-            _passcord = configuration.GetValue<string>("Login:Password");
+            _reg = reg;
+            _configuration = configuration.GetConnectionString("DbConnection");
         }
-        
         public ActionResult Index()
         {
             return View("Login");
         }
 
-        // GET: LoginController/Details/5
-        public ActionResult authentication(Loginkey log)
+        public ActionResult Authentication(Loginkey values)
         {
             try
             {
-                if(log.Username == _userid && log.Password == _passcord)
+                var resultreg = _reg.Login(values.Username, values.Password);
+                if(resultreg== true)
                 {
-                    return Redirect("/TestDetails/index");
+                    return Redirect("/Home/Index");
                 }
                 else
                 {
-                    ModelState.AddModelError("Password", "Invalid Email Error");
+                    ModelState.AddModelError("password", "Invalid Email or Password");
                     return View("Login");
                 }
-
             }
             catch
             {
-                return View("Error");
+                return View("Login");
             }
-            
         }
+
 
         // GET: LoginController/Create
         public ActionResult Create()
@@ -116,3 +122,4 @@ namespace MVCwithCRUD.Controllers
         }
     }
 }
+

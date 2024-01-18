@@ -1,0 +1,75 @@
+﻿@model EntityFrameworkMVC.Registration
+    
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+            width: 60%;
+            margin-bottom: 5px;
+            padding: 6px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form asp-action="Authentication" method="post">
+            <div>
+                <input asp-for="UserName" type="text" class="form-control" name="UserName" placeholder="Enter your Email" required>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div><br />
+            <div>
+                <input asp-for="Password" type="password" class="form-control" name="Password" placeholder="Password" required>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div><br />
+           <br />
+            <input type="submit" value="Conform">
+        </form>
+    </div>
+</body>
+</html>

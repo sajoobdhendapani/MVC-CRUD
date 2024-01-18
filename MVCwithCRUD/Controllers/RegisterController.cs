@@ -25,8 +25,12 @@ namespace MVCwithCRUD.Controllers
         // GET: RegisterController
         public ActionResult Index()
         {
-            var result = _add.GetAllRegistrations();
-            return View("View",result);
+            return View("View");
+        }
+        public ActionResult List()
+        {
+            var list = _add.GetAllRegistrations();
+            return View("View", list);
         }
 
         // GET: RegisterController/Details/5
@@ -42,37 +46,71 @@ namespace MVCwithCRUD.Controllers
                 return View("Error");
             }
         }
+        public ActionResult Authentication(Registration reg)
+        {
+            try
+            {
+                var resultreg = _add.Register(reg);
+                if(resultreg==true)
+                {
+                    _add.Insert(reg);
+                    return Redirect("/Login/Index");
+                }
+                else
+                {
+                    return View("RegisterPage");
+                }
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
 
         // GET: RegisterController/Create
         public ActionResult Create()
         {
-            var result = new Registration();
-            return View("Register", result);
+            try
+            {
+                return View("Create", new Registration());
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
         }
 
         // POST: RegisterController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Registration value)
+        public ActionResult Create(Registration values)
         {
-            var result = _add.Login(value);
+
 
             try
             {
-                if (result == true)
+                var resultreg = _add.Register(values);
+
+
+                if (resultreg == true)
                 {
-                    _add.Insert(value);
-                    return Redirect("/Login/Index");
+                    _add.Insert(values);
+
+                    var list = _add.GetAllRegistrations();
+                    return View("View", list);
                 }
                 else
                 {
-                    return View();
+                    
+                    return View("Create", values);
                 }
+
             }
-            catch(Exception ex)
+            catch
             {
-                return View();
+                return View("Error");
             }
+
         }
 
         // GET: RegisterController/Edit/5
@@ -97,9 +135,12 @@ namespace MVCwithCRUD.Controllers
         {
             try
             {
+                //_add.Update(id, value);
+                //var result = _add.GetAllRegistrations();
+                //return View("View", result);
                 _add.Update(id, value);
-                var result = _add.GetAllRegistrations();
-                return View("View", result);
+                var list = _add.GetAllRegistrations();
+                return View("View", list);
             }
             catch
             {
@@ -130,11 +171,12 @@ namespace MVCwithCRUD.Controllers
             try
             {
                 _add.Delete(RegistrationId);
-                return RedirectToAction(nameof(Index));
+                var list = _add.GetAllRegistrations();
+                return View("View", list);
             }
             catch
             {
-                return View();
+                return View("Error");
             }
         }
     }
