@@ -9,6 +9,5 @@ namespace DataAccessLayer
     public interface ILocationRepostory
     {
         public IEnumerable<Locations> LocationDetails();
-        //public Locations LocationUpdate(long id, Locations prd);
     }
 }

@@ -25,7 +25,7 @@ namespace MVCwithCRUD.Controllers
         // GET: RegisterController
         public ActionResult Index()
         {
-            return View("View");
+            return View("RegisterPage");
         }
         public ActionResult List()
         {
@@ -135,12 +135,9 @@ namespace MVCwithCRUD.Controllers
         {
             try
             {
-                //_add.Update(id, value);
-                //var result = _add.GetAllRegistrations();
-                //return View("View", result);
                 _add.Update(id, value);
                 var list = _add.GetAllRegistrations();
-                return View("View", list);
+                return View("Edit", list);
             }
             catch
             {
@@ -172,7 +169,7 @@ namespace MVCwithCRUD.Controllers
             {
                 _add.Delete(RegistrationId);
                 var list = _add.GetAllRegistrations();
-                return View("View", list);
+                return View("Delete", list);
             }
             catch
             {

@@ -62,7 +62,7 @@ namespace EntityFrameworkMVC
         {
             try
             {
-                var update =_context.Database.ExecuteSqlRaw($"exec UpdateRecord {Id},'{value.UserName}','{value.Password}'");
+                var update =_context.Database.ExecuteSqlRaw($"update Registration set UserName='{value.UserName}',Password='{value.Password}' where RegistrationId={Id}");
 
             }
             catch (Exception ex)
@@ -70,13 +70,13 @@ namespace EntityFrameworkMVC
                 throw;
             }
         }
-        public Registration GetById(long number)
+        public Registration GetById(long id)
         {
             try
             {
  
-                var result = _context.Registration.FromSqlRaw<Registration>($"exec Getbyid={number}").ToList().FirstOrDefault(); 
-                return result;
+                var result = _context.Registration.FromSqlRaw<Registration>($"select * from Registration where RegistrationId={id}"); 
+                return result.ToList().FirstOrDefault();
             }
             catch(Exception ex)
             {
@@ -87,7 +87,7 @@ namespace EntityFrameworkMVC
         {
             try
             {
-                var result = _context.Database.ExecuteSqlRaw($"exec DeleteRegistration {id} ");
+                var result = _context.Database.ExecuteSqlRaw($"delete Registration where RegistrationId= {id} ");
             }
             catch(Exception ex)
             {
