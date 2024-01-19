@@ -95,13 +95,6 @@ end
 drop procedure selectLocation
 exec selectLocation
 
-select * from Registration
 
-create procedure
-InsertRegister
-(@Username nvarchar(max),@Password nvarchar(max))
-as 
-begin
-insert into Registration values(@Username,@Password)
-end
-exec InsertRegister 'sajoob' , '1234'
+
+
